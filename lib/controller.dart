@@ -9,7 +9,6 @@ class Controller {
   final conn = SqfliteDatabaseHelper.instance;
 
   static Future<bool> isInternet() async {
-    // var connectivityResult = await (Connectivity().checkConnectivity());
     final List<ConnectivityResult> connectivityResult =
         await (Connectivity().checkConnectivity());
 

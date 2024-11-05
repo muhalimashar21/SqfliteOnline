@@ -4,42 +4,41 @@ import 'contactinfomodel.dart';
 import 'package:http/http.dart' as htpp;
 
 class SyncronizationData {
-static Future<bool> isInternet() async {
-  // var connectivityResult = await (Connectivity().checkConnectivity());
-  final List<ConnectivityResult> connectivityResult =
-      await (Connectivity().checkConnectivity());
+  static Future<bool> isInternet() async {
+    final List<ConnectivityResult> connectivityResult =
+        await (Connectivity().checkConnectivity());
 
-  // This condition is for demo purposes only to explain every connection type.
-  // Use conditions which work for your requirements.
-  if (connectivityResult == ConnectivityResult.mobile) {
-    // Mobile network available.
-    return true;
-  } else if (connectivityResult == ConnectivityResult.wifi) {
-    // Wi-fi is available.
-    // Note for Android:
-    // When both mobile and Wi-Fi are turned on system will return Wi-Fi only as active network type
-    return true;
-  } else if (connectivityResult == ConnectivityResult.ethernet) {
-    // Ethernet connection available.
-    return true;
-  } else if (connectivityResult == ConnectivityResult.vpn) {
-    // Vpn connection active.
-    // Note for iOS and macOS:
-    // There is no separate network interface type for [vpn].
-    // It returns [other] on any device (also simulator)
-    return true;
-  } else if (connectivityResult == ConnectivityResult.bluetooth) {
-    // Bluetooth connection available.
-    return true;
-  } else if (connectivityResult == ConnectivityResult.other) {
-    // Connected to a network which is not in the above mentioned networks.
-    return true;
-  } else if (connectivityResult == ConnectivityResult.none) {
-    // No available network types
+    // This condition is for demo purposes only to explain every connection type.
+    // Use conditions which work for your requirements.
+    if (connectivityResult == ConnectivityResult.mobile) {
+      // Mobile network available.
+      return true;
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      // Wi-fi is available.
+      // Note for Android:
+      // When both mobile and Wi-Fi are turned on system will return Wi-Fi only as active network type
+      return true;
+    } else if (connectivityResult == ConnectivityResult.ethernet) {
+      // Ethernet connection available.
+      return true;
+    } else if (connectivityResult == ConnectivityResult.vpn) {
+      // Vpn connection active.
+      // Note for iOS and macOS:
+      // There is no separate network interface type for [vpn].
+      // It returns [other] on any device (also simulator)
+      return true;
+    } else if (connectivityResult == ConnectivityResult.bluetooth) {
+      // Bluetooth connection available.
+      return true;
+    } else if (connectivityResult == ConnectivityResult.other) {
+      // Connected to a network which is not in the above mentioned networks.
+      return true;
+    } else if (connectivityResult == ConnectivityResult.none) {
+      // No available network types
+      return false;
+    }
     return false;
   }
-  return false;
-}
 
   final conn = SqfliteDatabaseHelper.instance;
 
