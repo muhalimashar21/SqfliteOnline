@@ -6,6 +6,7 @@ class ContactinfoModel {
         required this.email,
         required this.gender,
         required this.createdAt,
+        required this.updatedAt,
     });
 
     int? id;
@@ -14,6 +15,8 @@ class ContactinfoModel {
     String email;
     String gender;
     String createdAt;
+    String updatedAt;
+    
 
     factory ContactinfoModel.fromJson(Map<String, dynamic> json) => ContactinfoModel(
         id: json["id"],
@@ -22,6 +25,7 @@ class ContactinfoModel {
         email: json["email"],
         gender: json["gender"],
         createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -31,5 +35,6 @@ class ContactinfoModel {
         "email": email,
         "gender": gender,
         "created_at": createdAt,
+        "updated_at": updatedAt,
     };
 }

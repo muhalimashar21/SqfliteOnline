@@ -1,9 +1,14 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'databasehelper.dart';
 import 'contactinfomodel.dart';
 import 'package:http/http.dart' as htpp;
 
 class SyncronizationData {
+  // var url = Uri.parse('https://binagasmandiri.com/api/tipegas');
+  //
   static Future<bool> isInternet() async {
     final List<ConnectivityResult> connectivityResult =
         await (Connectivity().checkConnectivity());
@@ -59,16 +64,19 @@ class SyncronizationData {
   Future saveToMysqlWith(List<ContactinfoModel> contactList) async {
     for (var i = 0; i < contactList.length; i++) {
       Map<String, dynamic> data = {
-        "contact_id": contactList[i].id.toString(),
         "user_id": contactList[i].userId.toString(),
+        "contact_id": contactList[i].id.toString(),
         "name": contactList[i].name,
         "email": contactList[i].email,
         "gender": contactList[i].gender,
         "created_at": contactList[i].createdAt,
+        "updated_at": contactList[i].updatedAt,
       };
+      // print(data);
       final response = await htpp.post(
-          'https://pro.lpkbegawan.com/load_from_sqflite.php' as Uri,
+          Uri.parse('https://binagasmandiri.com/api/addtipegas'),
           body: data);
+      // print(response.body);
       if (response.statusCode == 200) {
         print("Saving Data ");
       } else {
@@ -100,9 +108,10 @@ class SyncronizationData {
         "email": contactList[i]['email'],
         "gender": contactList[i]['gender'],
         "created_at": contactList[i]['created_at'],
+        "updated_at": contactList[i]['updated_at'],
       };
       final response = await htpp.post(
-          'https://pro.lpkbegawan.com/load_from_sqflite.php' as Uri,
+          Uri.parse('https://binagasmandiri.com/api/addtipegas'),
           body: data);
       if (response.statusCode == 200) {
         print("Saving Data ");

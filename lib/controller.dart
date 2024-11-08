@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:sqflitetoonline/contactinfomodel.dart';

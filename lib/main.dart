@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -71,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       loading = false;
     });
-    //print(list);
+    // print(list);
   }
 
   Future syncToMysql() async {
@@ -82,13 +83,18 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  String status = "Offline";
+  late StreamSubscription<List<ConnectivityResult>> subscription;
+
   Future isInteret() async {
-    await SyncronizationData.isInternet().then((connection) {
-      if (connection) {
-        print("Internet connection abailale");
-      } else {
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((List<ConnectivityResult> result) {
+      if (result.contains(ConnectivityResult.none)) {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("No Internet2")));
+            .showSnackBar(SnackBar(content: Text("No Internet")));
+      } else {
+        print('Online');
       }
     });
   }
@@ -110,20 +116,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sync Sqflite to Mysql"),
+        title: Text("Sync Sqflite to API Mysql"),
         actions: [
           IconButton(
               icon: Icon(Icons.refresh_sharp),
               onPressed: () async {
-                await SyncronizationData.isInternet().then((connection) {
-                  if (connection) {
-                    syncToMysql();
-                    print("Internet connection abailale");
-                  } else {
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text("No Internet")));
-                  }
-                });
+                syncToMysql();
               })
         ],
       ),
@@ -159,7 +157,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     name: name.text,
                     email: email.text,
                     gender: gender.text,
-                    createdAt: DateTime.now().toString());
+                    createdAt: DateTime.now().toString(),
+                    updatedAt: DateTime.now().toString());
                 await Controller().addData(contactinfoModel).then((value) {
                   if (value > 0) {
                     print("Success");
